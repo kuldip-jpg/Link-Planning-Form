@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Link Planning Form</title>
+
+  <style>
+    /* ===== White Theme (matches your app style) ===== */
+    :root {
+      --bg-main: #ffffff;
+      --bg-light: #f8f9fb;
+      --bg-card: #ffffff;
+
+      --border-color: #e5e7eb;
+
+      --text-primary: #111827;
+      --text-secondary: #6b7280;
+
+      --primary: #f26522;        /* orange */
+      --primary-hover: #e0551d;
+
+      --success: #16a34a;
+      --danger: #ef4444;
+      --info: #2563eb;
+
+      --radius: 10px;
+      --shadow: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 24px rgba(0,0,0,0.12);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: var(--bg-light);
+      color: var(--text-primary);
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 28px auto 60px;
+      padding: 0 16px;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+
+    .sub {
+      margin-top: 6px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .panel + .panel { margin-top: 14px; }
+
+    .panel-h {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg-light);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .panel-h h2 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .panel-b { padding: 14px 16px 16px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+
+    .field { grid-column: span 3; }
+    .field.span-4 { grid-column: span 4; }
+    .field.span-6 { grid-column: span 6; }
+    .field.span-8 { grid-column: span 8; }
+    .field.span-12 { grid-column: span 12; }
+
+    label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 9px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: #fff;
+      color: var(--text-primary);
+      font-size: 13px;
+      outline: none;
+    }
+
+    input::placeholder { color: #9ca3af; }
+
+    input:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(242,101,34,0.15);
+    }
+
+    input[readonly] {
+      background: #f3f4f6;
+      cursor: not-allowed;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      font-size: 13px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: #fff;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      transition: .12s ease;
+      user-select: none;
+    }
+
+    .btn:hover { border-color: #cbd5e1; }
+    .btn.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .btn.primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+
+    .btn.good {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: #9a3412;
+    }
+
+    .btn.danger {
+      background: #fee2e2;
+      border-color: #fecaca;
+      color: var(--danger);
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: #fff;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .rows {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .row-card {
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .row-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      background: #f9fafb;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .row-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 800;
+    }
+
+    .badge.gp {
+      border-color: #86efac;
+      background: #ecfdf5;
+      color: #15803d;
+    }
+
+    .row-meta {
+      font-size: 12px;
+      color: var(--text-secondary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .row-body { padding: 12px; }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 100;
+    }
+
+    .modal {
+      width: min(520px, 100%);
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      background: #fff;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .modal-h {
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-color);
+      background: #f9fafb;
+    }
+
+    .modal-h strong { font-size: 14px; }
+
+    .modal-b { padding: 14px; }
+
+    .modal-b p {
+      margin: 0 0 12px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .choice {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .choice button {
+      padding: 12px;
+      text-align: left;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: #fff;
+      color: var(--text-primary);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .choice button:hover {
+      border-color: rgba(242,101,34,0.55);
+      box-shadow: 0 0 0 2px rgba(242,101,34,0.10);
+    }
+
+    .choice small {
+      display: block;
+      margin-top: 6px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Searchable select */
+    .combo { position: relative; }
+    .combo .dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.10);
+      max-height: 220px;
+      overflow: auto;
+      display: none;
+      z-index: 20;
+    }
+
+    .combo .opt {
+      padding: 10px 11px;
+      cursor: pointer;
+      border-bottom: 1px solid #f1f5f9;
+      color: var(--text-primary);
+      font-size: 13px;
+    }
+    .combo .opt:last-child { border-bottom: none; }
+    .combo .opt:hover { background: #f3f4f6; }
+
+    .footer {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .danger-outline {
+      border-color: rgba(239,68,68,.6) !important;
+      box-shadow: 0 0 0 2px rgba(239,68,68,.12) !important;
+    }
+
+    @media (max-width: 960px) {
+      .field { grid-column: span 6; }
+      .field.span-4 { grid-column: span 6; }
+      .field.span-6 { grid-column: span 12; }
+      .field.span-8 { grid-column: span 12; }
+    }
+    @media (max-width: 520px) {
+      header { flex-direction: column; align-items: flex-start; }
+      .choice { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Link Planning Form</h1>
+        <div class="sub">
+          White theme UI matching your system. Use <span class="pill">+ Add</span> to add multiple in-return links (3-way / 4-way exchanges).
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="button" id="saveBtn">Save</button>
+        <button class="btn" type="button" id="resetBtn">Reset</button>
+      </div>
+    </header>
+
+    <!-- General Fields -->
+    <section class="panel" aria-label="General Fields">
+      <div class="panel-h">
+        <h2>General Fields</h2>
+        <span class="pill">Campaign • Client • Partner • Type • Cost</span>
+      </div>
+      <div class="panel-b">
+        <div class="grid">
+          <div class="field span-4">
+            <label>Campaign / Month <span class="hint">Month picker</span></label>
+            <input type="month" id="campaignMonth" value="2026-01" />
+          </div>
+
+          <div class="field span-4">
+            <label>Client <span class="hint">View-only</span></label>
+            <input type="text" id="clientName" value="(Auto: Selected Client)" readonly />
+          </div>
+
+          <div class="field span-4">
+            <label>Partner <span class="hint">View-only</span></label>
+            <input type="text" id="partnerName" value="(Auto: Selected Partner)" readonly />
+          </div>
+
+          <div class="field span-4">
+            <label>Collaboration Type</label>
+            <select id="collabType">
+              <option value="Paid">Paid</option>
+              <option value="Exchange" selected>Exchange</option>
+              <option value="Free">Free</option>
+            </select>
+          </div>
+
+          <div class="field span-4">
+            <label>Link Type</label>
+            <select id="linkType">
+              <option value="LP" selected>LP (Link Placement)</option>
+              <option value="GP">GP (Guest Post)</option>
+            </select>
+          </div>
+
+          <div class="field span-4">
+            <label>Collaboration Status <span class="hint">View-only</span></label>
+            <input type="text" id="collabStatus" value="Not Complete" readonly />
+          </div>
+
+          <div class="field span-4">
+            <label>Link Cost <span class="hint">Auto</span></label>
+            <input type="text" id="linkCost" value="$0 (auto)" readonly />
+          </div>
+
+          <div class="field span-8">
+            <label>Notes <span class="hint">Optional</span></label>
+            <input type="text" id="notes" placeholder="Any special instructions..." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Client Link Details -->
+    <section class="panel" aria-label="Client Link Details">
+      <div class="panel-h">
+        <h2>Client Link Details (Our Client)</h2>
+        <div class="actions">
+          <span class="pill">Add LP/GP rows</span>
+          <button class="btn primary" type="button" data-add="client">+ Add</button>
+        </div>
+      </div>
+      <div class="panel-b">
+        <div class="rows" id="clientRows"></div>
+      </div>
+    </section>
+
+    <!-- Partner Link Details -->
+    <section class="panel" aria-label="Partner Link Details">
+      <div class="panel-h">
+        <h2>Partner Link Details</h2>
+        <div class="actions">
+          <span class="pill">Add LP/GP rows</span>
+          <button class="btn primary" type="button" data-add="partner">+ Add</button>
+        </div>
+      </div>
+      <div class="panel-b">
+        <div class="rows" id="partnerRows"></div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <button class="btn" type="button" id="validateBtn">Validate</button>
+      <button class="btn" type="button" id="exportBtn">Export JSON</button>
+    </div>
+  </div>
+
+  <!-- Add Modal -->
+  <div class="modal-backdrop" id="addModal" role="dialog" aria-modal="true" aria-labelledby="addModalTitle">
+    <div class="modal">
+      <div class="modal-h">
+        <strong id="addModalTitle">Add Link Row</strong>
+        <button class="btn" type="button" id="closeModal">✕</button>
+      </div>
+      <div class="modal-b">
+        <p>Choose LP or GP. Fields will appear automatically. You can add multiple rows.</p>
+        <div class="choice">
+          <button type="button" id="chooseLP">
+            Link Placement (LP)
+            <small>Placement URL, Target URL, Anchor Text, Content Doc, Status</small>
+          </button>
+          <button type="button" id="chooseGP">
+            Guest Post (GP)
+            <small>Title, Target URL, Anchor Text, Content Doc, Status</small>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Mock partner sites (replace with API/DB) =====
+    const PARTNER_SITES = [
+      "api-linkbuilding.nexwebsolutions.com",
+      "hyscaler.com",
+      "linkbuilding.company",
+      "techworld.io",
+      "newsportal.net",
+      "startupbuzz.ai",
+      "marketingdaily.co",
+      "financeinsights.com",
+      "localjournal.us",
+      "travelnotes.me"
+    ];
+
+    const els = {
+      modal: document.getElementById("addModal"),
+      closeModal: document.getElementById("closeModal"),
+      chooseLP: document.getElementById("chooseLP"),
+      chooseGP: document.getElementById("chooseGP"),
+      clientRows: document.getElementById("clientRows"),
+      partnerRows: document.getElementById("partnerRows"),
+      collabType: document.getElementById("collabType"),
+      linkCost: document.getElementById("linkCost"),
+      collabStatus: document.getElementById("collabStatus"),
+      validateBtn: document.getElementById("validateBtn"),
+      exportBtn: document.getElementById("exportBtn"),
+      resetBtn: document.getElementById("resetBtn"),
+      saveBtn: document.getElementById("saveBtn"),
+    };
+
+    let addContext = { section: "client" };
+
+    const uid = () => Math.random().toString(16).slice(2) + Date.now().toString(16);
+
+    function openModal(section) {
+      addContext.section = section;
+      document.getElementById("addModalTitle").textContent =
+        section === "client" ? "Add Client Link Row" : "Add Partner Link Row";
+      els.modal.style.display = "flex";
+    }
+
+    function closeModal() {
+      els.modal.style.display = "none";
+    }
+
+    // ===== Auto cost placeholder (replace with your real logic) =====
+    function refreshCost() {
+      const type = els.collabType.value;
+      const total = els.clientRows.querySelectorAll(".row-card").length +
+                    els.partnerRows.querySelectorAll(".row-card").length;
+
+      let base = 0;
+      if (type === "Paid") base = 150;
+      if (type === "Exchange") base = 0;
+      if (type === "Free") base = 0;
+
+      els.linkCost.value = `$${base * Math.max(1, total)} (auto)`;
+    }
+
+    function setCollabStatus() {
+      const required = Array.from(document.querySelectorAll("[data-required='1']"));
+      const hasMissing = required.some(i => !i.value.trim());
+      els.collabStatus.value = hasMissing ? "Not Complete" : "Complete";
+    }
+
+    function removeRow(rowId) {
+      const row = document.getElementById(rowId);
+      if (row) row.remove();
+      refreshCost();
+      setCollabStatus();
+    }
+
+    function makeRowShell({ section, kind }) {
+      const rowId = "row_" + uid();
+      const badgeClass = kind === "GP" ? "badge gp" : "badge";
+      const titleText = section === "client"
+        ? (kind === "LP" ? "Client Link Placement" : "Client Guest Post")
+        : (kind === "LP" ? "Partner Link Placement" : "Partner Guest Post");
+
+      const card = document.createElement("div");
+      card.className = "row-card";
+      card.id = rowId;
+
+      card.innerHTML = `
+        <div class="row-top">
+          <div class="row-title">
+            <span class="${badgeClass}">${kind}</span>
+            <div class="row-meta">${titleText}</div>
+          </div>
+          <div class="row-actions">
+            <button class="btn danger" type="button" data-remove="${rowId}">Remove</button>
+          </div>
+        </div>
+        <div class="row-body">
+          <div class="grid" data-grid="${rowId}"></div>
+        </div>
+      `;
+
+      card.querySelector("[data-remove]").addEventListener("click", (e) => {
+        removeRow(e.currentTarget.getAttribute("data-remove"));
+      });
+
+      return { card, grid: card.querySelector(`[data-grid="${rowId}"]`) };
+    }
+
+    function fieldHTML({
+      label, name, type = "text", placeholder = "", span = 6,
+      required = false, readonly = false, options = null, hint = ""
+    }) {
+      const reqAttr = required ? `data-required="1"` : "";
+      const roAttr = readonly ? "readonly" : "";
+      const disAttr = readonly && options ? "disabled" : "";
+      const hintHTML = hint ? `<span class="hint">${hint}</span>` : "";
+
+      if (options) {
+        const opts = options.map(o => `<option value="${o}">${o}</option>`).join("");
+        return `
+          <div class="field span-${span}">
+            <label>${label} ${hintHTML}</label>
+            <select name="${name}" ${reqAttr} ${disAttr}>
+              ${opts}
+            </select>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="field span-${span}">
+          <label>${label} ${hintHTML}</label>
+          <input type="${type}" name="${name}" placeholder="${placeholder}" ${reqAttr} ${roAttr} />
+        </div>
+      `;
+    }
+
+    function comboField({ label, name, span = 6, required = false, hint = "Search and select partner site" }) {
+      const reqAttr = required ? `data-required="1"` : "";
+      return `
+        <div class="field span-${span}">
+          <label>${label} <span class="hint">${hint}</span></label>
+          <div class="combo" data-combo="1">
+            <input type="text" name="${name}" placeholder="Type to search..." ${reqAttr} autocomplete="off" />
+            <div class="dropdown" role="listbox"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function wireCombos(scopeEl) {
+      const combos = scopeEl.querySelectorAll(".combo[data-combo='1']");
+      combos.forEach(combo => {
+        const input = combo.querySelector("input");
+        const dd = combo.querySelector(".dropdown");
+
+        function render(list) {
+          dd.innerHTML = list.map(s => `<div class="opt" role="option">${s}</div>`).join("");
+          dd.style.display = list.length ? "block" : "none";
+          dd.querySelectorAll(".opt").forEach(opt => {
+            opt.addEventListener("click", () => {
+              input.value = opt.textContent;
+              dd.style.display = "none";
+              setCollabStatus();
+            });
+          });
+        }
+
+        input.addEventListener("input", () => {
+          const q = input.value.trim().toLowerCase();
+          const filtered = PARTNER_SITES.filter(s => s.toLowerCase().includes(q)).slice(0, 12);
+          render(filtered);
+        });
+
+        input.addEventListener("focus", () => {
+          const q = input.value.trim().toLowerCase();
+          const filtered = PARTNER_SITES.filter(s => s.toLowerCase().includes(q)).slice(0, 12);
+          render(filtered);
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!combo.contains(e.target)) dd.style.display = "none";
+        });
+      });
+    }
+
+    // ===== Row builders per your spec =====
+    function addClientLP() {
+      const { card, grid } = makeRowShell({ section: "client", kind: "LP" });
+      grid.innerHTML = [
+        fieldHTML({ label: "Placement URL", name: "placement_url", placeholder: "https://partner-site.com/page", span: 6, required: true }),
+        fieldHTML({ label: "Target URL", name: "target_url", placeholder: "https://client-site.com/landing", span: 6, required: true }),
+        fieldHTML({ label: "Anchor Text", name: "anchor_text", placeholder: "Anchor text...", span: 6, required: true }),
+        fieldHTML({ label: "Content Document Link", name: "content_doc", placeholder: "https://docs...", span: 6 }),
+        fieldHTML({ label: "Content Status", name: "content_status", span: 4, options: ["Not Started", "In Progress", "Ready", "Published"] }),
+        fieldHTML({ label: "Link Status", name: "link_status", span: 4, options: ["Pending", "Live", "Rejected", "Removed"] }),
+        fieldHTML({ label: "Notes", name: "row_notes", span: 4, placeholder: "Optional" })
+      ].join("");
+      els.clientRows.appendChild(card);
+      refreshCost();
+      setCollabStatus();
+    }
+
+    function addClientGP() {
+      const { card, grid } = makeRowShell({ section: "client", kind: "GP" });
+      grid.innerHTML = [
+        fieldHTML({ label: "Title", name: "title", placeholder: "Guest post title...", span: 6, required: true }),
+        fieldHTML({ label: "Target URL", name: "target_url", placeholder: "https://client-site.com/landing", span: 6, required: true }),
+        fieldHTML({ label: "Anchor Text", name: "anchor_text", placeholder: "Anchor text...", span: 6, required: true }),
+        fieldHTML({ label: "Content Document Link", name: "content_doc", placeholder: "https://docs...", span: 6 }),
+        fieldHTML({ label: "Content Status", name: "content_status", span: 4, options: ["Not Started", "In Progress", "Ready", "Published"] }),
+        fieldHTML({ label: "Link Status", name: "link_status", span: 4, options: ["Pending", "Live", "Rejected", "Removed"] }),
+        fieldHTML({ label: "Notes", name: "row_notes", span: 4, placeholder: "Optional" })
+      ].join("");
+      els.clientRows.appendChild(card);
+      refreshCost();
+      setCollabStatus();
+    }
+
+    function addPartnerLP() {
+      const { card, grid } = makeRowShell({ section: "partner", kind: "LP" });
+      grid.innerHTML = [
+        comboField({ label: "Partner Site", name: "partner_site", span: 6, required: true }),
+        fieldHTML({ label: "Placement URL", name: "placement_url", placeholder: "https://partner-site.com/page", span: 6, required: true }),
+        fieldHTML({ label: "Content Document Link", name: "content_doc", placeholder: "https://docs...", span: 6 }),
+        fieldHTML({ label: "Content Status", name: "content_status", span: 3, options: ["Not Started", "In Progress", "Ready", "Published"] }),
+        fieldHTML({ label: "Link Status", name: "link_status", span: 3, options: ["Pending", "Live", "Rejected", "Removed"] }),
+        fieldHTML({ label: "Collaboration Type", name: "collab_type_row", span: 6, options: ["Paid", "Exchange"], hint: "Paid / Exchange" })
+      ].join("");
+      els.partnerRows.appendChild(card);
+      wireCombos(card);
+      refreshCost();
+      setCollabStatus();
+    }
+
+    function addPartnerGP() {
+      const { card, grid } = makeRowShell({ section: "partner", kind: "GP" });
+      grid.innerHTML = [
+        comboField({ label: "Partner Site", name: "partner_site", span: 6, required: true }),
+        fieldHTML({ label: "Title", name: "title", placeholder: "Guest post title...", span: 6, required: true }),
+        fieldHTML({ label: "Content Document Link", name: "content_doc", placeholder: "https://docs...", span: 6 }),
+        fieldHTML({ label: "Content Status", name: "content_status", span: 3, options: ["Not Started", "In Progress", "Ready", "Published"] }),
+        fieldHTML({ label: "Link Status", name: "link_status", span: 3, options: ["Pending", "Live", "Rejected", "Removed"] }),
+        fieldHTML({ label: "Collaboration Type", name: "collab_type_row", span: 6, options: ["Paid", "Exchange", "Free"], hint: "Paid / Exchange / Free" })
+      ].join("");
+      els.partnerRows.appendChild(card);
+      wireCombos(card);
+      refreshCost();
+      setCollabStatus();
+    }
+
+    // ===== Collect + Validate =====
+    function collectForm() {
+      const general = {
+        campaignMonth: document.getElementById("campaignMonth").value,
+        client: document.getElementById("clientName").value,
+        partner: document.getElementById("partnerName").value,
+        collaborationType: document.getElementById("collabType").value,
+        linkType: document.getElementById("linkType").value,
+        collaborationStatus: document.getElementById("collabStatus").value,
+        linkCost: document.getElementById("linkCost").value,
+        notes: document.getElementById("notes").value
+      };
+
+      const readRows = (container) => {
+        return Array.from(container.querySelectorAll(".row-card")).map(card => {
+          const kind = card.querySelector(".badge").textContent.trim();
+          const fields = {};
+          card.querySelectorAll("input[name], select[name]").forEach(el => {
+            fields[el.name] = el.value;
+          });
+          return { kind, fields };
+        });
+      };
+
+      return {
+        general,
+        clientLinkDetails: readRows(els.clientRows),
+        partnerLinkDetails: readRows(els.partnerRows)
+      };
+    }
+
+    function validate() {
+      const required = Array.from(document.querySelectorAll("[data-required='1']"));
+      required.forEach(el => el.classList.remove("danger-outline"));
+
+      const invalid = required.filter(el => !el.value.trim());
+      invalid.forEach(el => el.classList.add("danger-outline"));
+
+      setCollabStatus();
+
+      if (invalid.length) {
+        alert(`Please fill ${invalid.length} required field(s). They are highlighted.`);
+        return false;
+      }
+      alert("Looks good ✅");
+      return true;
+    }
+
+    // ===== Events =====
+    document.querySelectorAll("[data-add]").forEach(btn => {
+      btn.addEventListener("click", () => openModal(btn.getAttribute("data-add")));
+    });
+
+    els.closeModal.addEventListener("click", closeModal);
+    els.modal.addEventListener("click", (e) => { if (e.target === els.modal) closeModal(); });
+
+    els.chooseLP.addEventListener("click", () => {
+      closeModal();
+      if (addContext.section === "client") addClientLP();
+      else addPartnerLP();
+    });
+
+    els.chooseGP.addEventListener("click", () => {
+      closeModal();
+      if (addContext.section === "client") addClientGP();
+      else addPartnerGP();
+    });
+
+    els.collabType.addEventListener("change", refreshCost);
+
+    document.addEventListener("input", (e) => {
+      if (e.target.matches("input, select")) setCollabStatus();
+    });
+
+    els.validateBtn.addEventListener("click", validate);
+
+    els.exportBtn.addEventListener("click", () => {
+      const data = collectForm();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "link-planning-form.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    els.resetBtn.addEventListener("click", () => {
+      if (!confirm("Reset the form and remove all rows?")) return;
+      els.clientRows.innerHTML = "";
+      els.partnerRows.innerHTML = "";
+      document.getElementById("notes").value = "";
+      refreshCost();
+      setCollabStatus();
+    });
+
+    els.saveBtn.addEventListener("click", () => {
+      if (!validate()) return;
+      const payload = collectForm();
+      console.log("SAVE payload:", payload);
+      alert("Saved (demo). Check console for payload.");
+    });
+
+    // ===== Default rows (optional) =====
+    addClientLP();
+    addPartnerLP();
+    refreshCost();
+    setCollabStatus();
+  </script>
+</body>
+</html>
