@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Link Building Management Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: #f5f7fb;
+      margin: 0;
+      padding: 24px;
+      color: #1f2937;
+    }
+
+    h1 {
+      margin-bottom: 16px;
+      font-size: 22px;
+    }
+
+    .dashboard {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      overflow-x: auto;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 1800px;
+      font-size: 14px;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: #f1f5f9;
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
+      white-space: nowrap;
+    }
+
+    tbody tr:hover {
+      background: #f9fafb;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Status badges */
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .planned { background: #e5e7eb; color: #374151; }
+    .writing { background: #dbeafe; color: #1d4ed8; }
+    .review { background: #fde68a; color: #92400e; }
+    .approved { background: #ccfbf1; color: #065f46; }
+    .published { background: #dcfce7; color: #166534; }
+    .rejected { background: #fee2e2; color: #991b1b; }
+
+    .live { background: #dcfce7; color: #166534; }
+    .waiting { background: #fef3c7; color: #92400e; }
+    .blocked { background: #fee2e2; color: #991b1b; }
+
+    .complete { background: #dcfce7; color: #166534; }
+    .not-complete { background: #fee2e2; color: #991b1b; }
+
+    .section-divider {
+      background: #f8fafc;
+      font-weight: 600;
+      text-align: center;
+      color: #334155;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Link Building Management</h1>
+
+<div class="dashboard">
+<table>
+  <thead>
+    <tr>
+      <th>Client</th>
+      <th>Partner Site</th>
+      <th>Collaboration Type</th>
+      <th>Link Type</th>
+      <th>Content Status</th>
+      <th>Content Doc</th>
+      <th>Target URL</th>
+      <th>Title</th>
+      <th>Anchor</th>
+      <th>Link URL</th>
+      <th>Link Status</th>
+      <th>Link Cost ($)</th>
+      <th>Website</th>
+
+      <th class="section-divider">Partner Site Link</th>
+      <th>Placement Doc</th>
+      <th>Partner Link Status</th>
+      <th>Collaboration Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>Crisp.Chat</td>
+      <td>cleverly.co</td>
+      <td>Exchange</td>
+      <td>GP</td>
+
+      <td><span class="badge published">Published</span></td>
+      <td><a href="#">Google Doc</a></td>
+      <td><a href="#">crisp.chat/en</a></td>
+      <td>Best AI Chatbots in 2026</td>
+      <td>Crisp</td>
+      <td><a href="#">cleverly.co/blog/lead</a></td>
+      <td><span class="badge live">Live</span></td>
+      <td>30</td>
+      <td><a href="#">openxcell.com</a></td>
+
+      <td><a href="#">Partner Article</a></td>
+      <td><a href="#">Placement Doc</a></td>
+      <td><span class="badge waiting">Waiting</span></td>
+      <td><span class="badge complete">Complete</span></td>
+    </tr>
+
+    <tr>
+      <td>Crisp.Chat</td>
+      <td>cleverly.co</td>
+      <td>Paid</td>
+      <td>LP</td>
+
+      <td><span class="badge writing">Writing</span></td>
+      <td><a href="#">Google Doc</a></td>
+      <td><a href="#">crisp.chat</a></td>
+      <td>-</td>
+      <td>Crisp Chat</td>
+      <td>-</td>
+      <td><span class="badge blocked">Block</span></td>
+      <td>—</td>
+      <td><a href="#">openxcell.com</a></td>
+
+      <td>-</td>
+      <td>-</td>
+      <td><span class="badge rejected">Rejected</span></td>
+      <td><span class="badge not-complete">Not Complete</span></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</body>
+</html>
